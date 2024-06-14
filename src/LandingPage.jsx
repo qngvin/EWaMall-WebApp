@@ -5,7 +5,7 @@ export default function LandingPage() {
       <div className="absolute bottom-0 left-[60%] w-56 h-56 rounded-[100%] bg-[#ffffff22]" />
       <div className="absolute top-1/2 right-[10%] transform -translate-y-1/2">
         <img
-          src="../public/iconbackground.png"
+          src="../public/images/iconbackground.png"
           className="block h-[80vh] w-[75vh]"
           alt="Background Icon"
         />
@@ -31,7 +31,7 @@ export default function LandingPage() {
         <div>
           <button className="flex flex-row gap-4 items-center rounded-lg px-4 py-2 justify-center bg-[#242058]">
             <img
-              src="../public/google-play.png"
+              src="../public/images/google-play.png"
               className="block h-[40px] w-[40px]"
               alt="Background Icon"
             />
