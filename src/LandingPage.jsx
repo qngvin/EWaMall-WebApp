@@ -1,43 +1,43 @@
 export default function LandingPage() {
   return (
-    <div className="relative grid grid-cols-2 h-[100vh] w-full bg-background_gradient_3  ">
-      <div className="absolute top-0 left-[30%] w-56 h-56 rounded-[100%] bg-[#ffffff22]" />
-      <div className="absolute bottom-0 left-[60%] w-56 h-56 rounded-[100%] bg-[#ffffff22]" />
-      <div className="absolute top-1/2 right-[10%] transform -translate-y-1/2">
+    <div className="relative flex flex-col lg:grid grid-cols-2 h-[100vh] w-full bg-background_gradient_3  ">
+      <div className="absolute hidden lg:block top-0 left-[30%] w-56 h-56 rounded-[100%] bg-[#ffffff22]" />
+      <div className="absolute hidden lg:block bottom-0 left-[60%] w-56 h-56 rounded-[100%] bg-[#ffffff22]" />
+      <div className="lg:absolute lg:top-1/2 lg:right-[10%] lg:transform lg:-translate-y-1/2">
         <img
           src="/images/iconbackground.png"
-          className="block h-[80vh] w-[75vh]"
+          className="block lg:h-[70vh] lg:w-[70vh] xl:h-[80vh] xl:w-[80vh] h-[50vh] w-[40vh] mt-[15%]  "
           alt="Background Icon"
         />
       </div>
-      <div className="col-span-1 px-[20%] flex flex-col justify-center gap-4">
+      <div className="lg:col-span-1 lg:px-[20%] px-[10%] flex flex-col justify-center gap-4">
         <p
           style={{ letterSpacing: "-0.07em" }}
-          className="text-[48px] font-roboto text-[#4B6BB2] font-medium"
+          className="lg:text-[48px] text-[24px] font-roboto text-[#4B6BB2] font-medium"
         >
           TẢI NGAY
         </p>
         <p
           style={{ letterSpacing: "0.01em" }}
-          className=" font-roboto text-[#012c54] text-[75px] font-semibold"
+          className=" font-roboto text-[#012c54] lg:text-[75px] text-[40px] font-semibold"
         >
           ỨNG DỤNG EWAMALL
         </p>
-        <p className="text-[#6a6a6aa6] text-[20px] font-roboto">
+        <p className="text-[#6a6a6aa6] lg:text-[20px] font-roboto">
           Sứ mệnh của EWaMall là mang đến trải nghiệm mua sắm cho người lớn tuổi
           liền mạch, cung cấp các tiện ích thuận tiện và hỗ trợ thao tác dễ dàng
           và thú vị.
         </p>
         <div>
-          <button className="flex flex-row gap-4 items-center rounded-lg px-4 py-2 justify-center bg-[#242058]">
+          <button className="flex flex-row gap-4 items-center rounded-lg lg:px-4 lg:py-2 px-2 py-1 justify-center bg-[#242058]">
             <img
               src="/images/google-play.png"
-              className="block h-[40px] w-[40px]"
+              className="block lg:h-[40px] lg:w-[40px] h-[25px] w-[25px]"
               alt="Background Icon"
             />
             <div className="flex flex-col items-start justify-start">
-              <p className="text-white text-[12px]">GET IT ON</p>
-              <p  style={{ letterSpacing: "0.05em" }} className="text-white font-roboto text-[17px] font-semibold">
+              <p className="text-white lg:text-[12px] text-[9px]">GET IT ON</p>
+              <p  style={{ letterSpacing: "0.05em" }} className="text-white font-roboto lg:text-[17px] text-[14px] font-semibold">
                 Google Play
               </p>
             </div>
