@@ -1,12 +1,12 @@
 export default function LandingPage() {
   return (
-    <div className="relative flex flex-col lg:grid grid-cols-2 h-[100vh] w-full bg-background_gradient_3  ">
+    <div className="relative flex flex-col items-center lg:grid grid-cols-2 h-[100vh] w-full bg-background_gradient_3  ">
       <div className="absolute hidden lg:block top-0 left-[30%] w-56 h-56 rounded-[100%] bg-[#ffffff22]" />
       <div className="absolute hidden lg:block bottom-0 left-[60%] w-56 h-56 rounded-[100%] bg-[#ffffff22]" />
-      <div className="lg:absolute lg:top-1/2 lg:right-[10%] lg:transform lg:-translate-y-1/2">
+      <div className="lg:absolute lg:hidden block lg:top-1/2 lg:right-[10%] lg:transform lg:-translate-y-1/2">
         <img
           src="/images/iconbackground.png"
-          className="block lg:h-[70vh] lg:w-[70vh] xl:h-[80vh] xl:w-[80vh] h-[50vh] w-[40vh] mt-[15%]  "
+          className="block lg:h-[70vh] lg:w-[70vh] xl:h-[80vh] xl:w-[80vh] h-[60vh] w-[50vh] mt-[15%]  "
           alt="Background Icon"
         />
       </div>
