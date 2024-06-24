@@ -2,6 +2,7 @@ import axios from "axios";
 
 export default function LandingPage() {
   const handleInstall = () => {
+    // Gửi yêu cầu POST đến API
     axios
       .post("https://ewamallbe.onrender.com/api/DashBoard/NewDownload", {})
       .then((response) => {
@@ -11,11 +12,24 @@ export default function LandingPage() {
         console.error("API error:", error);
       });
   
-    fetch("/images/Ewamall.apk")
-      .then((response) => {
-        return response.blob();
-      })
-      .then((blob) => {
+    // Tạo XMLHttpRequest để tải file
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "/images/Ewamall.apk", true);
+    xhr.responseType = "blob";
+  
+    // Theo dõi sự kiện tiến trình tải xuống
+    xhr.addEventListener("progress", (event) => {
+      if (event.lengthComputable) {
+        const percentComplete = (event.loaded / event.total) * 100;
+        console.log("Đã tải xuống:", percentComplete.toFixed(2) + "%");
+        // Tại đây bạn có thể cập nhật giao diện để hiển thị tiến trình tải xuống
+      }
+    });
+  
+    // Xử lý khi tải xuống hoàn tất
+    xhr.addEventListener("load", () => {
+      if (xhr.status === 200) {
+        const blob = xhr.response;
         const fileURL = window.URL.createObjectURL(blob);
   
         const alink = document.createElement("a");
@@ -25,11 +39,20 @@ export default function LandingPage() {
         document.body.appendChild(alink);
         alink.click();
         document.body.removeChild(alink);
-      })
-      .catch((error) => {
-        console.error("Fetch error:", error);
-      });
+      } else {
+        console.error("Lỗi khi tải xuống file:", xhr.statusText);
+      }
+    });
+  
+    // Xử lý khi có lỗi
+    xhr.addEventListener("error", () => {
+      console.error("Lỗi kết nối đến server.");
+    });
+  
+    // Bắt đầu tải xuống
+    xhr.send();
   };
+  
   
   return (
     <div className="relative flex flex-col items-center lg:grid grid-cols-2 md:h-[100vh] md:py-0 pb-[10%] w-full bg-background_gradient_3  ">
