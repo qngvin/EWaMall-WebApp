@@ -2,22 +2,13 @@ import axios from "axios";
 
 export default function LandingPage() {
   const handleInstall = () => {
-    axios
-      .post("https://ewamallbe.onrender.com/api/DashBoard/NewDownload", {})
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error("API error:", error);
-      });
-  
     fetch("/images/Ewamall.apk")
       .then((response) => {
         return response.blob();
       })
       .then((blob) => {
         const fileURL = window.URL.createObjectURL(blob);
-  
+
         const alink = document.createElement("a");
         alink.href = fileURL;
         alink.download = "Ewamall.apk";
@@ -29,8 +20,14 @@ export default function LandingPage() {
       .catch((error) => {
         console.error("Fetch error:", error);
       });
+    axios
+      .post("https://ewamallbe.onrender.com/api/DashBoard/NewDownload", {})
+      .then((response) => {})
+      .catch((error) => {
+        console.error("API error:", error);
+      });
   };
-  
+
   return (
     <div className="relative flex flex-col items-center lg:grid grid-cols-2 md:h-[100vh] md:py-0 pb-[10%] w-full bg-background_gradient_3  ">
       <div className="absolute hidden md:block top-0 left-[30%] w-56 h-56 rounded-[100%] bg-[#ffffff22]" />
