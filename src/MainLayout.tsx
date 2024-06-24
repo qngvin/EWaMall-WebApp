@@ -61,7 +61,7 @@ export default function MainLayout() {
         <div className="flex  items-center gap-10 md:px-[10%] px-[5%]">
           <Dropdown
             overlay={
-              <Menu className="md:hidden block">
+              <Menu className="md:block block">
                 {items.map((item) => (
                   <Menu.Item key={item.key}>{item.label}</Menu.Item>
                 ))}
