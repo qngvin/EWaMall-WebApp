@@ -5,7 +5,17 @@ export default function LandingPage() {
     axios
       .post("https://ewamallbe.onrender.com/api/DashBoard/NewDownload", {})
       .then((response) => {
-        console.log("API response:", response.data);
+        console.log(response)
+        fetch("/images/Ewamall.apk").then((response) => {
+          response.blob().then((blob) => {
+            const fileURL = window.URL.createObjectURL(blob);
+
+            const alink = document.createElement("a");
+            alink.href = fileURL;
+            alink.download = "Ewamall.apk";
+            alink.click();
+          });
+        });
       })
       .catch((error) => {
         console.error("API error:", error);
@@ -41,7 +51,10 @@ export default function LandingPage() {
           và thú vị.
         </p>
         <div>
-          <button  onClick={handleInstall} className="flex flex-row gap-4 items-center rounded-lg lg:px-4 lg:py-2 px-2 py-1 justify-center bg-[#242058]">
+          <button
+            onClick={handleInstall}
+            className="flex flex-row gap-4 items-center rounded-lg lg:px-4 lg:py-2 px-2 py-1 justify-center bg-[#242058]"
+          >
             <img
               src="/images/google-play.png"
               className="block lg:h-[40px] lg:w-[40px] h-[25px] w-[25px]"
