@@ -2,31 +2,54 @@ import axios from "axios";
 
 export default function LandingPage() {
   const handleInstall = () => {
-    fetch("/images/Ewamall.apk")
+    const downloadUrl = "/images/Ewamall.apk"; // Replace with your actual download URL
+  
+    // Create an anchor element for the download
+    const alink = document.createElement("a");
+    alink.style.display = "none";
+    document.body.appendChild(alink);
+  
+    // Function to initiate the download
+    const initiateDownload = (url) => {
+      alink.href = url;
+      alink.download = "Ewamall.apk";
+      alink.click();
+      document.body.removeChild(alink);
+    };
+  
+    // Use axios to fetch the file and then initiate download
+    axios({
+      url: downloadUrl,
+      method: "GET",
+      responseType: "blob", // Important to handle binary data
+      onDownloadProgress: (progressEvent) => {
+        // Optionally, you can handle progress events here
+        const percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        // console.log(`Download progress: ${percentCompleted}%`);
+      },
+    })
       .then((response) => {
-        return response.blob();
-      })
-      .then((blob) => {
+        const blob = new Blob([response.data], { type: response.headers["content-type"] });
         const fileURL = window.URL.createObjectURL(blob);
-
-        const alink = document.createElement("a");
-        alink.href = fileURL;
-        alink.download = "Ewamall.apk";
-        alink.style.display = "none";
-        document.body.appendChild(alink);
-        alink.click();
-        document.body.removeChild(alink);
+        initiateDownload(fileURL);
       })
       .catch((error) => {
         console.error("Fetch error:", error);
       });
+  
+    // Optionally, send a POST request to your API endpoint
     axios
       .post("https://ewamallbe.onrender.com/api/DashBoard/NewDownload", {})
-      .then((response) => {})
+      .then((response) => {
+        // console.log("API response:", response.data);
+      })
       .catch((error) => {
         console.error("API error:", error);
       });
   };
+  
 
   return (
     <div className="relative flex flex-col items-center lg:grid grid-cols-2 md:h-[100vh] md:py-0 pb-[10%] w-full bg-background_gradient_3  ">
