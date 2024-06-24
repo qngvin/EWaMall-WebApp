@@ -36,6 +36,18 @@ const DashboardLayout: React.FC = () => {
       label: "Customer",
       to: "/manager/customer",
     },
+    {
+      key: "4",
+      icon: <HiMiniUsers />,
+      label: "Product",
+      to: "/manager/product",
+    },
+    {
+      key: "5",
+      icon: <HiMiniUsers />,
+      label: "Order",
+      to: "/manager/order",
+    },
   ];
   return (
     <Layout style={{ height: "100vh" }}>
