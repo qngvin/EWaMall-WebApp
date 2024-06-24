@@ -7,6 +7,9 @@ export default {
         inter: ["Inter", "sans-serif"],
         roboto: ["Roboto"],
       },
+      boxShadow: {
+        boxAnalycs: "0px 0px 9px 1px #aaaaaa29",
+      },
       backgroundImage: {
         background_gradient_2:
           "linear-gradient(15deg, #4585bd 50%, #F8F8F8 50%);",

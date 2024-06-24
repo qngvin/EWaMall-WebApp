@@ -1,4 +1,16 @@
+import axios from "axios";
+
 export default function LandingPage() {
+  const handleInstall = () => {
+    axios
+      .post("https://ewamallbe.onrender.com/api/DashBoard/NewDownload", {})
+      .then((response) => {
+        console.log("API response:", response.data);
+      })
+      .catch((error) => {
+        console.error("API error:", error);
+      });
+  };
   return (
     <div className="relative flex flex-col items-center lg:grid grid-cols-2 md:h-[100vh] md:py-0 pb-[10%] w-full bg-background_gradient_3  ">
       <div className="absolute hidden md:block top-0 left-[30%] w-56 h-56 rounded-[100%] bg-[#ffffff22]" />
@@ -29,7 +41,7 @@ export default function LandingPage() {
           và thú vị.
         </p>
         <div>
-          <button className="flex flex-row gap-4 items-center rounded-lg lg:px-4 lg:py-2 px-2 py-1 justify-center bg-[#242058]">
+          <button  onClick={handleInstall} className="flex flex-row gap-4 items-center rounded-lg lg:px-4 lg:py-2 px-2 py-1 justify-center bg-[#242058]">
             <img
               src="/images/google-play.png"
               className="block lg:h-[40px] lg:w-[40px] h-[25px] w-[25px]"
@@ -37,7 +49,10 @@ export default function LandingPage() {
             />
             <div className="flex flex-col items-start justify-start">
               <p className="text-white lg:text-[12px] text-[9px]">GET IT ON</p>
-              <p  style={{ letterSpacing: "0.05em" }} className="text-white font-roboto lg:text-[17px] text-[14px] font-semibold">
+              <p
+                style={{ letterSpacing: "0.05em" }}
+                className="text-white font-roboto lg:text-[17px] text-[14px] font-semibold"
+              >
                 Google Play
               </p>
             </div>
