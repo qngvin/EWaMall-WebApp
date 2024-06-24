@@ -2,54 +2,15 @@ import axios from "axios";
 
 export default function LandingPage() {
   const handleInstall = () => {
-    const downloadUrl = "/images/Ewamall.apk"; // Replace with your actual download URL
-  
-    // Create an anchor element for the download
-    const alink = document.createElement("a");
-    alink.style.display = "none";
-    document.body.appendChild(alink);
-  
-    // Function to initiate the download
-    const initiateDownload = (url) => {
-      alink.href = url;
-      alink.download = "Ewamall.apk";
-      alink.click();
-      document.body.removeChild(alink);
-    };
-  
-    // Use axios to fetch the file and then initiate download
-    axios({
-      url: downloadUrl,
-      method: "GET",
-      responseType: "blob", // Important to handle binary data
-      onDownloadProgress: (progressEvent) => {
-        // Optionally, you can handle progress events here
-        const percentCompleted = Math.round(
-          (progressEvent.loaded * 100) / progressEvent.total
-        );
-        // console.log(`Download progress: ${percentCompleted}%`);
-      },
-    })
-      .then((response) => {
-        const blob = new Blob([response.data], { type: response.headers["content-type"] });
-        const fileURL = window.URL.createObjectURL(blob);
-        initiateDownload(fileURL);
-      })
-      .catch((error) => {
-        console.error("Fetch error:", error);
-      });
-  
-    // Optionally, send a POST request to your API endpoint
     axios
       .post("https://ewamallbe.onrender.com/api/DashBoard/NewDownload", {})
       .then((response) => {
-        // console.log("API response:", response.data);
+        console.log("API response:", response.data);
       })
       .catch((error) => {
         console.error("API error:", error);
       });
   };
-  
 
   return (
     <div className="relative flex flex-col items-center lg:grid grid-cols-2 md:h-[100vh] md:py-0 pb-[10%] w-full bg-background_gradient_3  ">
@@ -81,8 +42,10 @@ export default function LandingPage() {
           và thú vị.
         </p>
         <div>
-          <button
+          <a
+            href="https://ewamallbe.onrender.com/api/DashBoard/Download"
             onClick={handleInstall}
+            style={{ maxWidth: "fit-content" }} 
             className="flex flex-row gap-4 items-center rounded-lg lg:px-4 lg:py-2 px-2 py-1 justify-center bg-[#242058]"
           >
             <img
@@ -99,7 +62,7 @@ export default function LandingPage() {
                 Google Play
               </p>
             </div>
-          </button>
+          </a>
         </div>
       </div>
     </div>
