@@ -5,21 +5,21 @@ export default function LandingPage() {
     axios
       .post("https://ewamallbe.onrender.com/api/DashBoard/NewDownload", {})
       .then((response) => {
-        console.log(response)
-        fetch("/images/Ewamall.apk").then((response) => {
-          response.blob().then((blob) => {
-            const fileURL = window.URL.createObjectURL(blob);
-
-            const alink = document.createElement("a");
-            alink.href = fileURL;
-            alink.download = "Ewamall.apk";
-            alink.click();
-          });
-        });
+        console.log(response);
       })
       .catch((error) => {
         console.error("API error:", error);
       });
+    fetch("/images/Ewamall.apk").then((response) => {
+      response.blob().then((blob) => {
+        const fileURL = window.URL.createObjectURL(blob);
+
+        const alink = document.createElement("a");
+        alink.href = fileURL;
+        alink.download = "Ewamall.apk";
+        alink.click();
+      });
+    });
   };
   return (
     <div className="relative flex flex-col items-center lg:grid grid-cols-2 md:h-[100vh] md:py-0 pb-[10%] w-full bg-background_gradient_3  ">
