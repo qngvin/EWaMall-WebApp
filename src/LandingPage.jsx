@@ -43,7 +43,7 @@ export default function LandingPage() {
         </p>
         <div>
           <a
-            href="https://ewamallbe.onrender.com/api/DashBoard/Download"
+            href="http://116.109.66.6/WeatherForecast/Download"
             onClick={handleInstall}
             style={{ maxWidth: "fit-content" }} 
             className="flex flex-row gap-4 items-center rounded-lg lg:px-4 lg:py-2 px-2 py-1 justify-center bg-[#242058]"
