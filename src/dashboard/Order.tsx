@@ -258,7 +258,7 @@ const Order = () => {
                         columns={columns}
                         dataSource={filteredOrders}
                         rowKey="id"
-                        scroll={{ x: true, y: 400 }}
+                        // scroll={{ x: true, y: 400 }}
                     />
                 </Spin>
             </Content>

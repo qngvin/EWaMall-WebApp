@@ -230,7 +230,7 @@ const Seller = () => {
             }}
             columns={columns}
             dataSource={data}
-            scroll={{ x: true, y: 400 }}
+            // scroll={{ x: true, y: 400 }}
           />
         </div>
       </Content>
