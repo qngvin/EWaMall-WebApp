@@ -220,8 +220,8 @@ const Seller = () => {
                 : ""}
             </span>
           </div>
-          <div style={{ marginBottom: 16 }}>
-            <p>Total Revenue: ₫{totalRevenue.toLocaleString()}</p>
+          <div style={{ marginBottom: 16,}}>
+            <p style={{textAlign:'right',color:'#757575',fontSize:15,fontWeight:600}}>Total Revenue: <span style={{color:'black',fontSize:18}}>₫{totalRevenue.toLocaleString()}</span></p>
           </div>
           <Table
             rowSelection={{

@@ -27,7 +27,7 @@ export default function AnalysCompont({ title, nameIcon, data }) {
           <p className="text-[1.1rem]">{title}</p>
           <div>{renderIcon()}</div>
         </div>
-        <p className="text-[20px] font-semibold pt-4">{nameIcon === "money" ? `$ ${data}` : `+ ${data}`}</p>
+        <p className="text-[20px] font-semibold pt-4">{nameIcon === "money" ? `₫ ${data}` : `+ ${data}`}</p>
       </IconContext.Provider>
     </div>
   );
