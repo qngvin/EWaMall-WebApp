@@ -7,6 +7,7 @@ import {
     message,
     Select,
     Spin,
+    Input,
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
@@ -18,9 +19,12 @@ interface Order {
     id: number;
     orderCode: string;
     orderDate: string;
-    totalCost: number; // Thêm trường totalCost
+    totalCost: number;
     status: {
         name: string;
+    };
+    seller: {
+        shopName: string;
     };
 }
 
@@ -29,6 +33,7 @@ const Order = () => {
     const [loading, setLoading] = useState(false);
     const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
     const [statusFilter, setStatusFilter] = useState<number | null>(null);
+    const [sellerFilter, setSellerFilter] = useState<string>("");
 
     useEffect(() => {
         fetchOrders();
@@ -40,16 +45,18 @@ const Order = () => {
             const response = await axios.get<Order[]>(
                 "https://ewamallbe.onrender.com/api/DashBoard/GetListOrders"
             );
-            // Transform response data to include totalCost and status.name
             const transformedOrders = response.data.map((order) => ({
                 ...order,
                 totalCost: order.totalCost,
                 status: {
                     name: order.status.name,
                 },
+                seller: {
+                    shopName: order.seller.shopName,
+                },
             }));
             setOrders(transformedOrders);
-            setFilteredOrders(transformedOrders); // Initialize filtered orders with all orders
+            setFilteredOrders(transformedOrders);
         } catch (error) {
             message.error("Failed to fetch orders");
             console.error("Error fetching data:", error);
@@ -65,7 +72,6 @@ const Order = () => {
             );
             if (response.status === 200) {
                 message.success(`Product ${id} approved successfully`);
-                // Optionally, update local state or fetch updated orders
                 fetchOrders();
             } else {
                 message.error(`Failed to approve product ${id}`);
@@ -83,7 +89,6 @@ const Order = () => {
             );
             if (response.status === 200) {
                 message.success(`Product ${id} banned successfully`);
-                // Optionally, update local state or fetch updated orders
                 fetchOrders();
             } else {
                 message.error(`Failed to ban product ${id}`);
@@ -96,12 +101,24 @@ const Order = () => {
 
     const handleStatusFilterChange = (value: number | null) => {
         setStatusFilter(value);
-        if (value !== null) {
-            const filtered = orders.filter((order) => order.id === statusOptions.find(opt => opt.id === value)?.id);
-            setFilteredOrders(filtered);
-        } else {
-            setFilteredOrders(orders); // Reset to all orders
+        filterOrders(value, sellerFilter);
+    };
+
+    const handleSellerFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setSellerFilter(value);
+        filterOrders(statusFilter, value);
+    };
+
+    const filterOrders = (status: number | null, seller: string) => {
+        let filtered = orders;
+        if (status !== null) {
+            filtered = filtered.filter((order) => order.status.name === statusOptions.find(opt => opt.id === status)?.name);
         }
+        if (seller) {
+            filtered = filtered.filter((order) => order.seller.shopName.toLowerCase().includes(seller.toLowerCase()));
+        }
+        setFilteredOrders(filtered);
     };
 
     const statusOptions = [
@@ -129,18 +146,37 @@ const Order = () => {
             render: (orderDate: string) => new Date(orderDate).toLocaleDateString('en-GB'),
         },
         {
-            title: "Total Cost", // Thêm cột Total Cost
+            title: "Total Cost",
             dataIndex: "totalCost",
             key: "totalCost",
+            width: 200,
             render: (totalCost: number) => `₫${totalCost}`,
         },
         {
+            title: "Seller",
+            dataIndex: "seller",
+            key: "seller",
+            width: 200,
+            render: (seller: { shopName: string }) => seller.shopName,
+            filterDropdown: () => (
+                <Input
+                    placeholder="Search Seller"
+                    value={sellerFilter}
+                    onChange={handleSellerFilterChange}
+                    style={{ width: 188, marginBottom: 8, display: 'block' }}
+                />
+            ),
+            filterIcon: (filtered: boolean) => (
+                <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+            ),
+        },
+        {
             title: "Status",
-            dataIndex: "statusId",
+            dataIndex: "status",
             key: "status",
             width: 150,
-            render: (status: number) => {
-                const statusText = statusOptions.find((opt) => opt.id === status)?.name;
+            render: (status: { name: string }) => {
+                const statusText = statusOptions.find((opt) => opt.name === status.name)?.name;
                 return <span>{statusText}</span>;
             },
             filterDropdown: () => (
@@ -159,29 +195,33 @@ const Order = () => {
             filterIcon: (filtered: boolean) => (
                 <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
             ),
-            onFilter: (value: any, record: Order) => record.status.name === value,
             filteredValue: statusFilter !== null ? [statusFilter] : null,
         },
         {
             title: "Actions",
             key: "actions",
             width: 200,
-            render: (_, record: Order) => (
-                <Space size="middle">
-                    <Button type="primary" onClick={() => handleApprove(record.id)}>
-                        Approve
-                    </Button>
-                    <Button danger onClick={() => handleBan(record.id)}>
-                        Ban
-                    </Button>
-                </Space>
-            ),
+            // render: (_, record: Order) => (
+            //     <Space size="middle">
+            //         <Button type="primary" onClick={() => handleApprove(record.id)}>
+            //             Approve
+            //         </Button>
+            //         <Button danger onClick={() => handleBan(record.id)}>
+            //             Ban
+            //         </Button>
+            //     </Space>
+            // ),
         },
     ];
 
     const handleClearFilters = () => {
         setStatusFilter(null);
-        setFilteredOrders(orders); // Reset to all orders
+        setSellerFilter("");
+        setFilteredOrders(orders);
+    };
+
+    const getTotalCost = () => {
+        return filteredOrders.reduce((total, order) => total + order.totalCost, 0);
     };
 
     return (
@@ -209,6 +249,9 @@ const Order = () => {
             >
                 <div style={{ marginBottom: 16 }}>
                     <Button onClick={handleClearFilters}>Clear Filters</Button>
+                </div>
+                <div style={{ marginBottom: 16 }}>
+                    <h3>Total Cost: ₫{getTotalCost()}</h3>
                 </div>
                 <Spin spinning={loading}>
                     <Table

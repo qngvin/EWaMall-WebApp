@@ -22,6 +22,7 @@ const Seller = () => {
   const [data, setData] = useState<any[]>([]);
   const [searchText, setSearchText] = useState<string>("");
   const [searchedColumn, setSearchedColumn] = useState<string>("");
+  const [totalRevenue, setTotalRevenue] = useState<number>(0); // Thêm state cho tổng revenue
 
   useEffect(() => {
     fetchSellers();
@@ -33,9 +34,15 @@ const Seller = () => {
         "https://ewamallbe.onrender.com/api/DashBoard/GetListSellers"
       );
       setData(response.data);
+      calculateTotalRevenue(response.data); // Tính tổng revenue
     } catch (error) {
       console.error("Error fetching sellers:", error);
     }
+  };
+
+  const calculateTotalRevenue = (sellers: any[]) => {
+    const total = sellers.reduce((acc, seller) => acc + seller.revenue, 0);
+    setTotalRevenue(total);
   };
 
   const handleSearch = (
@@ -212,6 +219,9 @@ const Seller = () => {
                 ? `Selected ${selectedRowKeys.length} items`
                 : ""}
             </span>
+          </div>
+          <div style={{ marginBottom: 16 }}>
+            <p>Total Revenue: ₫{totalRevenue.toLocaleString()}</p>
           </div>
           <Table
             rowSelection={{
