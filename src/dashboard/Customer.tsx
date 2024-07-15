@@ -33,6 +33,7 @@ const Customer = () => {
         "https://ewamallbe.onrender.com/api/DashBoard/GetListCustomers"
       );
       setData(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching customers:", error);
     }

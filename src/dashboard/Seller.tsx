@@ -136,6 +136,12 @@ const Seller = () => {
       width: 300,
     },
     {
+      title: "Revenue",
+      dataIndex: "revenue",
+      key: "revenue",
+      width: 150,
+    },
+    {
       title: "Phone Number",
       dataIndex: "phoneNumber",
       key: "phoneNumber",
