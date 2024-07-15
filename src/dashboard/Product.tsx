@@ -231,7 +231,7 @@ const Product = () => {
           dataSource={filteredProducts}
           rowKey="id"
           loading={loading}
-          scroll={{ x: true, y: 400 }}
+          // scroll={{ x: true, y: 400 }}
         />
       </Content>
     </Layout>
